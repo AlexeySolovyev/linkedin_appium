@@ -1,8 +1,12 @@
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.URL;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Ch_04_02_Locator_Strategies_Before {
@@ -21,7 +25,14 @@ public class Ch_04_02_Locator_Strategies_Before {
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("app", APP);
         driver = new AndroidDriver(new URL(APPIUM), caps);
-        try { Thread.sleep(3000); } catch (Exception ign) {}
+        try { Thread.sleep(3000); } catch (Exception ign) {} // waiting a visibility of element 3 second
+    }
+
+    @Test
+    public void test() {
+        WebElement element = driver.findElement(MobileBy.AccessibilityId("Login Screen"));
+        List<WebElement> elements = driver.findElements(MobileBy.AccessibilityId("Login Screen"));
+        System.out.println(elements.size());
     }
 
     @After
@@ -29,10 +40,5 @@ public class Ch_04_02_Locator_Strategies_Before {
         if (driver != null) {
             driver.quit();
         }
-    }
-
-    @Test
-    public void test() {
-        System.out.println("Here's our test!");
     }
 }
