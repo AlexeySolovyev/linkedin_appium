@@ -1,12 +1,12 @@
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.URL;
-import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Ch_04_04_Waiting_For_Elements_Before {
 
@@ -24,7 +24,12 @@ public class Ch_04_04_Waiting_For_Elements_Before {
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("app", APP);
         driver = new AndroidDriver(new URL(APPIUM), caps);
-        try { Thread.sleep(3000); } catch (Exception ign) {}
+    }
+
+    @Test
+    public void test() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("Login Screen")));
     }
 
     @After
@@ -32,12 +37,5 @@ public class Ch_04_04_Waiting_For_Elements_Before {
         if (driver != null) {
             driver.quit();
         }
-    }
-
-    @Test
-    public void test() {
-        driver.findElement(MobileBy.AccessibilityId("Login Screen"));
-        List<WebElement> elements = driver.findElements(MobileBy.AccessibilityId("Login Screen"));
-        System.out.println(elements.size());
     }
 }
