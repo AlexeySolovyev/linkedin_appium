@@ -4,6 +4,7 @@ import java.net.URL;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,16 +27,33 @@ public class Ch_04_05_Element_Basics_Before {
         driver = new AndroidDriver(new URL(APPIUM), caps);
     }
 
+    @Test
+    public void test() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement screen = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        MobileBy.AccessibilityId("Login Screen")));
+        screen.click();
+        WebElement username = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        MobileBy.AccessibilityId("username")));
+        username.sendKeys("alice");
+        WebElement password = driver.findElement(
+                        MobileBy.AccessibilityId("password"));
+        password.sendKeys("mypassword");
+        WebElement login = driver.findElement(
+                MobileBy.AccessibilityId("loginBtn"));
+        login.click();
+        WebElement loginText = wait.until
+                (ExpectedConditions.presenceOfElementLocated(
+                        MobileBy.xpath("//android.widget.TextView[contains(@text, 'You are logged in')]")));
+        assert(loginText.getText().contains("alice"));
+    }
+
     @After
     public void tearDown() {
         if (driver != null) {
             driver.quit();
         }
-    }
-
-    @Test
-    public void test() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("Login Screen")));
     }
 }
