@@ -1,15 +1,17 @@
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
-import java.net.URL;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Ch_04_06_Page_Source_Before {
+import java.net.URL;
+
+public class Ch_04_07_Challenge_EchoBox {
     private static final String APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.apk";
     private static final String APPIUM = "http://localhost:4723/wd/hub";
 
@@ -29,15 +31,22 @@ public class Ch_04_06_Page_Source_Before {
     @Test
     public void test() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        WebElement screen = wait.until
-                (ExpectedConditions.presenceOfElementLocated
-                        (MobileBy.AccessibilityId("Login Screen")));
-        screen.click();
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {}
-        System.out.println(driver.getPageSource());
+        WebElement echoBox = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        MobileBy.AccessibilityId("Echo Box")));
+        echoBox.click();
+        WebElement messageField = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        MobileBy.AccessibilityId("messageInput")));
+        messageField.clear();
+        messageField.sendKeys("Hello World!");
+        WebElement saveButton = driver.findElement(
+                MobileBy.xpath("//android.view.ViewGroup[@content-desc='messageSaveBtn']/android.widget.TextView"));
+        saveButton.click();
+        WebElement saidText = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        MobileBy.xpath("//android.widget.TextView[contains(@text, 'what you said before')]")));
+        assert (saidText.getText().contains("Here's what you said before"));
     }
 
     @After
