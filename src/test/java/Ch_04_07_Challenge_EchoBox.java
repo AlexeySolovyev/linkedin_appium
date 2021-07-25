@@ -41,12 +41,11 @@ public class Ch_04_07_Challenge_EchoBox {
         messageField.clear();
         messageField.sendKeys("Hello World!");
         WebElement saveButton = driver.findElement(
-                MobileBy.xpath("//android.view.ViewGroup[@content-desc='messageSaveBtn']/android.widget.TextView"));
+                MobileBy.AccessibilityId("messageSaveBtn"));
         saveButton.click();
         WebElement saidText = wait.until(
                 ExpectedConditions.presenceOfElementLocated(
-                        MobileBy.xpath("//android.widget.TextView[contains(@text, 'what you said before')]")));
-        assert (saidText.getText().contains("Here's what you said before"));
+                        MobileBy.AccessibilityId("Hello World!")));
     }
 
     @After
