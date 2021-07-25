@@ -34,12 +34,11 @@ public class Ch_05_06_Challenge_web_form {
         driver.get(SITE);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggleMenu"))).click();
         driver.findElement(By.cssSelector("a[href='/contact']")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("contactEmail"))).sendKeys("test@gmail.org");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#contactEmail"))).sendKeys("test@gmail.org");
         driver.findElement(By.id("contactText")).sendKeys("Here some test text");
-        driver.findElement(By.cssSelector("input[type='submit']")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='response___1yZzw error___2pSWM']")));
-        WebElement errorText = driver.findElement(By.cssSelector("div[class='response___1yZzw error___2pSWM']"));
-        assert(errorText.getText().contains("Captcha"));
+        driver.findElement(By.xpath("//input[@value='Send']")).click();
+        String response = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='response___1yZzw error___2pSWM']"))).getText();
+        assert(response.contains("Captcha"));
     }
 
     @After
