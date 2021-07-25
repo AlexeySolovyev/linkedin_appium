@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class Ch_05_03_Touch_Actions_Before {
 
         wait.until(
                 ExpectedConditions.presenceOfElementLocated(
-                        MobileBy.AccessibilityId("Altocumulus")));
+                        MobileBy.AccessibilityId("Altostratus")));
 
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
         Interaction moveToStart = finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), 520, 1530);
@@ -60,7 +61,7 @@ public class Ch_05_03_Touch_Actions_Before {
         swipe.addAction(pressUp);
         swipe.addAction(pressDown);
 
-        driver.perform(Arrays.asList(swipe));
+        driver.perform(Collections.singletonList(swipe));
         driver.findElement(MobileBy.AccessibilityId("Stratus"));
     }
 
