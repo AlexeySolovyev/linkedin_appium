@@ -29,9 +29,7 @@ public class Ch_05_05_Mobile_Web_Before {
     public void test() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         driver.get("http://appiumpro.com");
-        wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.id("toggleMenu"))).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggleMenu"))).click();
         driver.findElement(By.cssSelector("a[href='/editions']")).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(text(), 'All Editions')]")));
     }
